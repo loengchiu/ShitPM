@@ -1,6 +1,6 @@
 # ShitPM
 
-ShitPM 是一个为 AI IDE 开发环境（如 Antigravity, GitHub Copilot 等）设计的全链路、自动化产品经理（PM）工作流增强工具。它通过内置的状态机控制、严格的阶段锚点和专属的指令集（Skills），将软件需求从早期的概念范围探索，稳妥、高效地推进至项目简介、思维导图、功能清单、页面结构、PRD 以及交互原型和评审阶段。彻底解决并规避 AI 在长文本需求生成中容易产生的幻觉与发散问题。
+ShitPM 是一个为 AI IDE 开发环境（如GitHub Copilot、cursor 等）设计的全链路、自动化产品经理（PM）工作流增强工具。它通过内置的状态机控制、严格的阶段锚点和专属的指令集（Skills），将软件需求从早期的概念范围探索，稳妥、高效地推进至项目简介、思维导图、功能清单、页面结构、PRD 以及交互原型和评审阶段。彻底解决并规避 AI 在长文本需求生成中容易产生的幻觉与发散问题。
 
 ## ✨ 核心特性
 
@@ -14,7 +14,7 @@ ShitPM 是一个为 AI IDE 开发环境（如 Antigravity, GitHub Copilot 等）
 目前 ShitPM 脚本安装探测已经或计划支持以下工作环境：
 - ✅ GitHub Copilot
 - ✅ Codex
-- ✅ Antigravity (原生级深度推荐)
+- ✅ Antigravity
 - ✅ Cursor
 - ✅ Windsurf
 - ⏳ Trae (后续评估纳入首发主线)
