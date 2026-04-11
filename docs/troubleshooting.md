@@ -1,0 +1,54 @@
+# 故障排查
+
+## 1. 看不到 `pm-go`
+
+检查：
+
+- 是否已执行宿主安装脚本
+- 是否已执行 verify 脚本
+
+## 2. `pm-go` 范围判定结果不稳定
+
+检查：
+
+- 是否显式给出了项目目录和当前任务
+- `docs/project-status.json` 是否存在旧版锚点干扰
+- 是否把复杂任务误当成单一任务直接推进了下游产物
+
+## 3. 读取不到模板或契约
+
+检查：
+
+- `templates` 是否已暴露
+- `contracts` 是否已暴露
+
+## 3.1 看不到命令文档
+
+检查：
+
+- `shitpm-commands` 是否已安装
+- 宿主是否支持直接暴露命令文档
+- 如宿主不支持，改为直接调用同名短技能
+
+## 4. 版本锚点混乱
+
+检查：
+
+- `docs/project-status.json`
+- 当前显式路径与 `stable_baselines` 是否一致
+
+## 5. PRD 继续引用旧版上游
+
+检查：
+
+- 是否已刷新 `stable_baselines.feature_list`
+- 是否已刷新 `stable_baselines.page_structure`
+- 是否在输入中显式给出当前文件路径
+
+## 6. 看不到 `pm-pt` / `pm-pa`
+
+检查：
+
+- 是否重新执行了安装脚本
+- verify 是否仍为 `verify:ok`
+- 宿主技能目录里是否已经刷新短技能名
