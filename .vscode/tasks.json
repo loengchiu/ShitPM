@@ -1,0 +1,33 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Git: Clear index.lock",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}/scripts/git-unlock-and-retry.ps1"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Git: Clear index.lock and retry add -A",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}/scripts/git-unlock-and-retry.ps1",
+        "-RetryCommand",
+        "git add -A"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}
