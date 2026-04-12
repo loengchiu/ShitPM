@@ -20,7 +20,7 @@ function Pass([string]$msg) {
 
 function Assert-FileExists([string]$label, [string]$relPath) {
     if (-not $relPath) {
-        Fail "$label 路径为空，请先确认稳定版并执行 status-write.ps1 -BaselineField ... -BaselinePath ..."
+        Fail "$label 缺少稳定锚点。请先通过 pm-go 确认当前稳定版，或修复当前项目状态后再继续。"
     }
     $full = Join-Path $root ($relPath -replace '/', '\')
     if (-not (Test-Path -LiteralPath $full)) {
@@ -37,7 +37,7 @@ if ($softStages -contains $Target) {
 
 # 以下阶段需要 project-status.json 存在
 if (-not (Test-Path -LiteralPath $statusFile)) {
-    Fail 'project-status.json 不存在，请先执行 pm-go 并落盘初始状态。'
+    Fail '未发现项目状态文件，请先通过 pm-go 恢复或初始化当前项目状态。'
 }
 
 $s = Get-Content -LiteralPath $statusFile -Raw | ConvertFrom-Json

@@ -31,6 +31,72 @@ $root       = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $statusFile = Join-Path $root 'docs\project-status.json'
 $docsDir    = Join-Path $root 'docs'
 
+function Ensure-ObjectProperty {
+    param(
+        [Parameter(Mandatory = $true)]$Object,
+        [Parameter(Mandatory = $true)][string]$Name,
+        [Parameter(Mandatory = $true)]$DefaultValue
+    )
+
+    if ($null -eq $Object.PSObject.Properties[$Name]) {
+        $Object | Add-Member -NotePropertyName $Name -NotePropertyValue $DefaultValue
+    }
+}
+
+function Normalize-Status {
+    param([Parameter(Mandatory = $true)]$Status)
+
+    Ensure-ObjectProperty -Object $Status -Name 'current_stage' -DefaultValue ''
+    Ensure-ObjectProperty -Object $Status -Name 'last_action' -DefaultValue ''
+    Ensure-ObjectProperty -Object $Status -Name 'next_recommended' -DefaultValue ''
+    Ensure-ObjectProperty -Object $Status -Name 'context_summary' -DefaultValue ''
+
+    if ($null -eq $Status.PSObject.Properties['stable_baselines']) {
+        $Status | Add-Member -NotePropertyName 'stable_baselines' -NotePropertyValue ([PSCustomObject]@{})
+    }
+    if ($null -eq $Status.PSObject.Properties['scope_decomposition']) {
+        $Status | Add-Member -NotePropertyName 'scope_decomposition' -NotePropertyValue ([PSCustomObject]@{})
+    }
+    if ($null -eq $Status.PSObject.Properties['prd_partition']) {
+        $Status | Add-Member -NotePropertyName 'prd_partition' -NotePropertyValue ([PSCustomObject]@{})
+    }
+    if ($null -eq $Status.PSObject.Properties['latest_artifacts']) {
+        $Status | Add-Member -NotePropertyName 'latest_artifacts' -NotePropertyValue ([PSCustomObject]@{})
+    }
+    Ensure-ObjectProperty -Object $Status -Name 'blockers' -DefaultValue @()
+    Ensure-ObjectProperty -Object $Status -Name 'pending_confirmations' -DefaultValue @()
+
+    Ensure-ObjectProperty -Object $Status.stable_baselines -Name 'feature_list' -DefaultValue ''
+    Ensure-ObjectProperty -Object $Status.stable_baselines -Name 'page_structure' -DefaultValue ''
+    Ensure-ObjectProperty -Object $Status.stable_baselines -Name 'prd' -DefaultValue ''
+    Ensure-ObjectProperty -Object $Status.stable_baselines -Name 'prototype' -DefaultValue ''
+    Ensure-ObjectProperty -Object $Status.stable_baselines -Name 'visual_baseline' -DefaultValue ''
+
+    Ensure-ObjectProperty -Object $Status.scope_decomposition -Name 'required' -DefaultValue $false
+    Ensure-ObjectProperty -Object $Status.scope_decomposition -Name 'reason' -DefaultValue ''
+    Ensure-ObjectProperty -Object $Status.scope_decomposition -Name 'subprojects' -DefaultValue @()
+
+    Ensure-ObjectProperty -Object $Status.prd_partition -Name 'required' -DefaultValue $false
+    Ensure-ObjectProperty -Object $Status.prd_partition -Name 'reason' -DefaultValue ''
+    Ensure-ObjectProperty -Object $Status.prd_partition -Name 'units' -DefaultValue @()
+
+    Ensure-ObjectProperty -Object $Status.latest_artifacts -Name 'briefs' -DefaultValue @()
+    Ensure-ObjectProperty -Object $Status.latest_artifacts -Name 'mindmap' -DefaultValue ''
+    Ensure-ObjectProperty -Object $Status.latest_artifacts -Name 'feature_list' -DefaultValue ''
+    Ensure-ObjectProperty -Object $Status.latest_artifacts -Name 'page_structure' -DefaultValue ''
+    Ensure-ObjectProperty -Object $Status.latest_artifacts -Name 'prd' -DefaultValue ''
+    Ensure-ObjectProperty -Object $Status.latest_artifacts -Name 'prototypes' -DefaultValue @()
+    Ensure-ObjectProperty -Object $Status.latest_artifacts -Name 'prototype_annotations' -DefaultValue @()
+
+    $Status.blockers = @($Status.blockers)
+    $Status.pending_confirmations = @($Status.pending_confirmations)
+    $Status.latest_artifacts.briefs = @($Status.latest_artifacts.briefs)
+    $Status.latest_artifacts.prototypes = @($Status.latest_artifacts.prototypes)
+    $Status.latest_artifacts.prototype_annotations = @($Status.latest_artifacts.prototype_annotations)
+
+    return $Status
+}
+
 # ----------------------------------------------------------------
 # 前置校验：baseline 文件必须存在，否则直接失败，不修改状态文件
 # ----------------------------------------------------------------
@@ -97,6 +163,8 @@ if (Test-Path -LiteralPath $statusFile) {
         pending_confirmations = @()
     }
 }
+
+$status = Normalize-Status -Status $status
 
 # ----------------------------------------------------------------
 # 应用 patch：只更新 PSBoundParameters 中明确传入的参数
