@@ -47,6 +47,10 @@ $requiredFiles = @(
     'contracts\done-criteria.md',
     'contracts\stage-gates.md',
 
+    'scripts\status-read.ps1',
+    'scripts\status-write.ps1',
+    'scripts\stage-gate.ps1',
+    'scripts\gate-regression.ps1',
     'scripts\detect-hosts.ps1',
     'installers\install.ps1',
     'installers\uninstall.ps1',

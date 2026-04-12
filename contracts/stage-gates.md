@@ -3,6 +3,25 @@
 主链：
 `pm-go -> pm-scope -> pm-mm -> pm-fl -> pm-ps -> pm-prd -> pm-rv -> pm-pt -> pm-pa`
 
+## Runtime 校验
+
+进入每个阶段前，可执行 `stage-gate.ps1` 进行前置条件的运行时校验：
+
+```powershell
+# 示例：校验是否满足进入 pm-prd 的前置条件
+.\scripts\stage-gate.ps1 -Target pm-prd
+```
+
+校验通过（exit 0）后模型再开始生成。校验失败（exit 1）时输出阻塞原因，不进入该阶段。
+
+**强制门禁内容（所有有状态阶段均适用）：**
+
+1. `blockers` 非空时直接阻止，并列出每条阻塞文本
+2. `pending_confirmations` 非空时直接阻止，并列出每条待确认文本
+3. 对应上游产物的稳定版文件必须在磁盘上实际存在
+
+`pm-go / pm-scope / pm-mm / pm-fl` 为软阶段，无强制文件前置，直接放行。
+
 ## 门禁
 
 - `pm-scope` 前：已有项目目录和当前任务描述

@@ -5,8 +5,9 @@
 ## 遇到 PM 相关任务时
 
 - 所有 PM 工作统一从 `pm-go` 进入，不要跳过主入口直接进入子技能
-- 每次进入 `pm-go` 时，先读取 `docs/project-status.json`（如存在），恢复项目上下文后再继续
-- 每个技能执行完毕后，必须输出 `project-status.json` 更新块
+- 每次进入 `pm-go` 时，先运行 `.\scripts\status-read.ps1` 读取当前状态（如文件存在），恢复项目上下文后再继续
+- 进入任何阶段前，建议先运行 `.\scripts\stage-gate.ps1 -Target <skill>` 校验前置条件
+- 每个技能执行完毕后，必须输出一个可直接运行的 `.\scripts\status-write.ps1` 调用块，只包含本轮实际变更的字段
 
 ## 当前可用技能
 
