@@ -72,18 +72,25 @@
 ## pm-rv
 
 - 已列出实际采用路径
+- 已判清当前评审对象，而不是默认按 PRD 处理
 - 已判断与稳定锚点关系
+- 已对当前评审对象完成分层质量判断（至少覆盖 `pm-mm / pm-fl / pm-ps / pm-prd` 中的实际评审对象）
 - 已指出冲突、回退或回写建议
-- 若为多角色评审模式：已逐角色输出评审结论，已给出整体结论（通过 / 带条件通过 / 阻塞）
+- 若为多角色评审模式：已明确评审团组合，已逐角色输出评审结论，已给出整体结论（通过 / 带条件通过 / 阻塞）
+- 若存在待处理问题：已按 `真实风险 / 过度担忧 / 待观察项` 完成定性
+- 若待处理问题较多：已先完成归并、去重和阻塞度排序，而不是一次性全量追问
 - 若评审后存在待回答问题：已完成逐条问答，所有问题已路由处理或写入 `blockers` / `pending_confirmations`
-- **已输出 `project-status.json` 更新块**，含 `blockers` / `pending_confirmations` 变更及 `last_action` / `next_recommended`
+- 若问答后的答案已改变事实源：已将正式处理路由到 `pm-fix`
+- **已输出 `project-status.json` 更新块**，含 `latest_artifacts.reviews`、`blockers` / `pending_confirmations` 变更及 `last_action` / `next_recommended`
 
 ## pm-fix
 
 - 已识别当前 PRD 路径
 - 已完成版本关系判断
 - 已完成回写判定
+- 若当前 PRD 路径来自目录扫描候选集，已结合命名、版本信息、修改时间和上下文完成判定；若无法判清，已停止推进
 - 已输出稳定锚点修正建议
+- 若本轮自动改动了 `Mindmap`、`Feature List`、`Page Structure` 或其他上游/相关生成物：已生成修正记录并写明改动原因、改动范围、改动后路径
 - **已输出 `project-status.json` 更新块**，含受影响的 `stable_baselines` 字段
 
 ## pm-pt

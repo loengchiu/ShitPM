@@ -69,8 +69,35 @@ switch ($Target) {
     }
 
     'pm-rv' {
-        Assert-FileExists 'PRD [latest_artifacts]' $s.latest_artifacts.prd
-        Pass 'PRD 最新产物存在，前置通过。'
+        $hasMindmap = [bool]$s.latest_artifacts.mindmap
+        $hasFeatureList = [bool]($s.latest_artifacts.feature_list -or $s.stable_baselines.feature_list)
+        $hasPageStructure = [bool]($s.latest_artifacts.page_structure -or $s.stable_baselines.page_structure)
+        $hasPrd = [bool]($s.latest_artifacts.prd -or $s.stable_baselines.prd)
+
+        if (-not ($hasMindmap -or $hasFeatureList -or $hasPageStructure -or $hasPrd)) {
+            Fail '未发现可评审的 Mindmap / Feature List / Page Structure / PRD，请先生成至少一个评审对象，或显式指定当前评审路径。'
+        }
+
+        if ($hasMindmap) {
+            Assert-FileExists 'Mindmap [latest_artifacts]' $s.latest_artifacts.mindmap
+        }
+        if ($s.stable_baselines.feature_list) {
+            Assert-FileExists 'Feature List [stable_baselines]' $s.stable_baselines.feature_list
+        } elseif ($s.latest_artifacts.feature_list) {
+            Assert-FileExists 'Feature List [latest_artifacts]' $s.latest_artifacts.feature_list
+        }
+        if ($s.stable_baselines.page_structure) {
+            Assert-FileExists 'Page Structure [stable_baselines]' $s.stable_baselines.page_structure
+        } elseif ($s.latest_artifacts.page_structure) {
+            Assert-FileExists 'Page Structure [latest_artifacts]' $s.latest_artifacts.page_structure
+        }
+        if ($s.latest_artifacts.prd) {
+            Assert-FileExists 'PRD [latest_artifacts]' $s.latest_artifacts.prd
+        } elseif ($s.stable_baselines.prd) {
+            Assert-FileExists 'PRD [stable_baselines]' $s.stable_baselines.prd
+        }
+
+        Pass '已发现至少一个可评审对象，前置通过。'
     }
 
     'pm-fix' {

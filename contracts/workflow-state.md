@@ -35,6 +35,8 @@
     "feature_list": "",
     "page_structure": "",
     "prd": "",
+    "fix_records": [],
+    "reviews": [],
     "prototypes": [],
     "prototype_annotations": []
   },
@@ -66,7 +68,7 @@
 
 ## 写入时机
 
-每个 Skill 执行完毕后，**必须输出最新的 `project-status.json` 完整内容**（或明确标出变更字段），同步更新：
+每个 Skill 执行完毕后，**必须输出一个可直接运行的 `status-write.ps1` 调用块**，以 patch 方式同步更新：
 
 - `current_stage`：改为本轮实际到达的阶段
 - `last_action`：改为本轮实际完成的动作

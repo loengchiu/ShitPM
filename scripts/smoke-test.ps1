@@ -39,6 +39,7 @@ $requiredFiles = @(
     'templates\page-structure.md',
     'templates\prd.md',
     'templates\review-checklist.md',
+    'templates\fix-record.md',
     'templates\project-brief-lite.md',
     'templates\prototype-visual-baseline.md',
     'templates\prototype-annotation.md',

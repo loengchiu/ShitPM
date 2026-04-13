@@ -7,7 +7,7 @@
 
     # --- latest_artifacts ---
     # 标量字段：mindmap | feature_list | page_structure | prd
-    # 数组字段（追加去重）：briefs | prototypes | prototype_annotations
+    # 数组字段（追加去重）：briefs | fix_records | reviews | prototypes | prototype_annotations
     [string]$ArtifactField    ,
     [string]$ArtifactPath     ,
 
@@ -85,12 +85,16 @@ function Normalize-Status {
     Ensure-ObjectProperty -Object $Status.latest_artifacts -Name 'feature_list' -DefaultValue ''
     Ensure-ObjectProperty -Object $Status.latest_artifacts -Name 'page_structure' -DefaultValue ''
     Ensure-ObjectProperty -Object $Status.latest_artifacts -Name 'prd' -DefaultValue ''
+    Ensure-ObjectProperty -Object $Status.latest_artifacts -Name 'fix_records' -DefaultValue @()
+    Ensure-ObjectProperty -Object $Status.latest_artifacts -Name 'reviews' -DefaultValue @()
     Ensure-ObjectProperty -Object $Status.latest_artifacts -Name 'prototypes' -DefaultValue @()
     Ensure-ObjectProperty -Object $Status.latest_artifacts -Name 'prototype_annotations' -DefaultValue @()
 
     $Status.blockers = @($Status.blockers)
     $Status.pending_confirmations = @($Status.pending_confirmations)
     $Status.latest_artifacts.briefs = @($Status.latest_artifacts.briefs)
+    $Status.latest_artifacts.fix_records = @($Status.latest_artifacts.fix_records)
+    $Status.latest_artifacts.reviews = @($Status.latest_artifacts.reviews)
     $Status.latest_artifacts.prototypes = @($Status.latest_artifacts.prototypes)
     $Status.latest_artifacts.prototype_annotations = @($Status.latest_artifacts.prototype_annotations)
 
@@ -120,7 +124,7 @@ if (-not (Test-Path -LiteralPath $docsDir)) {
 }
 
 # 数组类型的 latest_artifacts 字段（写入时追加而非覆盖）
-$arrayFields = @('briefs', 'prototypes', 'prototype_annotations')
+$arrayFields = @('briefs', 'fix_records', 'reviews', 'prototypes', 'prototype_annotations')
 
 # ----------------------------------------------------------------
 # 加载或初始化空状态
@@ -156,6 +160,8 @@ if (Test-Path -LiteralPath $statusFile) {
             feature_list          = ''
             page_structure        = ''
             prd                   = ''
+            fix_records           = @()
+            reviews               = @()
             prototypes            = @()
             prototype_annotations = @()
         }
