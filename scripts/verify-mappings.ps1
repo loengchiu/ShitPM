@@ -11,7 +11,7 @@ $commandsDir = $resolved.Commands
 $templatesDir = $resolved.Templates
 $contractsDir = $resolved.Contracts
 
-$requiredSkills = @('pm-go', 'pm-mm', 'pm-fl', 'pm-ps', 'pm-prd', 'pm-rv', 'pm-fix', 'pm-pt', 'pm-pa')
+$requiredSkills = @('pm-go', 'pm-analysis', 'pm-mm', 'pm-fl', 'pm-ps', 'pm-prd', 'pm-rv', 'pm-fix', 'pm-pt', 'pm-pa')
 $missing = @()
 
 foreach ($skill in $requiredSkills) {

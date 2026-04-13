@@ -17,6 +17,7 @@ $requiredFiles = @(
     'docs\release-checklist.md',
     'skills\pm-go\SKILL.md',
     'skills\pm-scope\SKILL.md',
+    'skills\pm-analysis\SKILL.md',
     'skills\pm-mm\SKILL.md',
     'skills\pm-fl\SKILL.md',
     'skills\pm-ps\SKILL.md',

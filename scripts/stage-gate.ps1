@@ -1,6 +1,6 @@
 ﻿param(
     [Parameter(Mandatory = $true)]
-    [ValidateSet('pm-go','pm-scope','pm-mm','pm-fl','pm-ps','pm-prd','pm-rv','pm-fix','pm-pt','pm-pa')]
+    [ValidateSet('pm-go','pm-scope','pm-analysis','pm-mm','pm-fl','pm-ps','pm-prd','pm-rv','pm-fix','pm-pt','pm-pa')]
     [string]$Target
 )
 
@@ -29,7 +29,7 @@ function Assert-FileExists([string]$label, [string]$relPath) {
 }
 
 # 无强制前置的阶段：直接放行
-$softStages = @('pm-go', 'pm-scope', 'pm-mm', 'pm-fl')
+$softStages = @('pm-go', 'pm-scope', 'pm-analysis', 'pm-mm', 'pm-fl')
 if ($softStages -contains $Target) {
     Pass '无强制文件前置，放行。'
     exit 0
