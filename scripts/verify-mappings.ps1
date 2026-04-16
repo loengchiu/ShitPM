@@ -11,8 +11,8 @@ $commandsDir = $resolved.Commands
 $templatesDir = $resolved.Templates
 $contractsDir = $resolved.Contracts
 
-$requiredSkills = @('pm-go', 'pm-analysis', 'pm-mm', 'pm-fl', 'pm-ps', 'pm-prd', 'pm-rv', 'pm-fix', 'pm-pt', 'pm-pa')
-$requiredCommands = @('pm-go.md', 'pm-mm.md', 'pm-fl.md', 'pm-ps.md', 'pm-prd.md', 'pm-rv.md', 'pm-fix.md', 'pm-pt.md', 'pm-pa.md')
+$requiredSkills = @('scope', 'sum', 'mind', 'feat', 'page', 'prd', 'rev', 'fix', 'mock', 'note')
+$requiredCommands = @('init.md', 'sum.md', 'mind.md', 'feat.md', 'page.md', 'prd.md', 'rev.md', 'fix.md', 'mock.md', 'note.md')
 $requiredTemplates = @('project-brief-lite.md', 'mindmap-spec.md', 'feature-list.md', 'page-structure.md', 'prd.md', 'review-checklist.md', 'fix-record.md', 'prototype-visual-baseline.md', 'prototype-annotation.md')
 $requiredContracts = @('workflow-state.md', 'done-criteria.md', 'stage-gates.md', 'error-handling.md')
 $missing = @()
@@ -69,3 +69,4 @@ if ($missing.Count -gt 0) {
 }
 
 Write-Output 'verify:ok'
+

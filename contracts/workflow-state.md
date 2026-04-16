@@ -49,9 +49,9 @@
 
 | 字段 | 说明 |
 | --- | --- |
-| `current_stage` | 当前所处 PM 阶段，如 `pm-fl` / `pm-prd` / `pm-rv` |
+| `current_stage` | 当前所处 PM 阶段，如 `feat` / `prd` / `rev` |
 | `last_action` | 上一轮实际完成的动作，一句话描述，如"完成 PRD v2 分块写作" |
-| `next_recommended` | 本轮结束时推荐的下一步，如"执行 pm-rv 进行评审" |
+| `next_recommended` | 本轮结束时推荐的下一步，如"执行 rev 进行评审" |
 | `context_summary` | 项目摘要，用于新对话恢复上下文，100字以内，描述项目目标、当前进展和待处理事项 |
 
 ## 规则
@@ -64,7 +64,7 @@
 6. Prototype 进入稳定版后，刷新 `stable_baselines.prototype`
 7. 视觉基线形成后，刷新 `stable_baselines.visual_baseline`
 8. **`stable_baselines` 写入约束**：`-BaselinePath` 指向的文件必须已存在于磁盘。`status-write.ps1` 在写入 `stable_baselines` 前会强制校验，文件不存在时直接报错退出（exit 1）且不落盘，防止状态污染。
-9. **blockers / pending_confirmations 约束**：存在未清除的阻塞项或待确认项时，`stage-gate.ps1` 对所有有状态阶段（pm-ps 及以后）均直接阻止推进，并输出每条具体内容。
+9. **blockers / pending_confirmations 约束**：存在未清除的阻塞项或待确认项时，`stage-gate.ps1` 对所有有状态阶段（page 及以后）均直接阻止推进，并输出每条具体内容。
 
 ## 写入时机
 
@@ -85,9 +85,9 @@
 ```powershell
 # 在项目根目录执行
 .\scripts\status-write.ps1 `
-  -Stage        "pm-fl" `
+  -Stage        "feat" `
   -LastAction   "完成功能清单 v1" `
-  -NextRecommended "执行 pm-ps" `
+  -NextRecommended "执行 page" `
   -ContextSummary  "客服工单系统，FL v1 完成，待 PS" `
   -ArtifactField   "feature_list" `
   -ArtifactPath    "docs/feature-lists/2026-04-12_fl-v1.md"
@@ -100,3 +100,4 @@
 
 > `status-write.ps1` 执行 patch 写入，只覆盖传入的字段，不影响其余字段。
 > `status-read.ps1` 可随时读取当前状态或单个字段（例：`.\scripts\status-read.ps1 -Field stable_baselines`）。
+

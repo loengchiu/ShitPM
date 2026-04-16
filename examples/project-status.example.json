@@ -1,7 +1,7 @@
 {
-  "current_stage": "PRD",
+  "current_stage": "prd",
   "last_action": "完成 PRD v1 分块写作，覆盖工单接入与分发与指派两个模块",
-  "next_recommended": "执行 pm-rv 对 PRD v1 进行评审",
+  "next_recommended": "执行 rev 对 PRD v1 进行评审",
   "context_summary": "客服工单系统，覆盖工单接入、分发指派、处理审核、查询统计四个模块。FL 和 PS 已稳定，PRD v1 分块完成，待评审。",
   "stable_baselines": {
     "feature_list": "docs/feature-lists/2026-04-11_feature-list-demo-v1.md",
@@ -31,9 +31,12 @@
     "feature_list": "docs/feature-lists/2026-04-11_feature-list-demo-v1.md",
     "page_structure": "docs/page-structures/2026-04-11_page-structure-demo-v1.md",
     "prd": "docs/prd/2026-04-11_prd-demo-v1.md",
+    "fix_records": [],
+    "reviews": [],
     "prototypes": [],
     "prototype_annotations": []
   },
   "blockers": [],
   "pending_confirmations": []
 }
+

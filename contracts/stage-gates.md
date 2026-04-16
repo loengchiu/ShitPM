@@ -1,42 +1,36 @@
 # Stage Gates
 
-主链：`pm-go -> pm-scope -> pm-analysis -> pm-mm -> pm-fl -> pm-ps -> pm-prd -> pm-rv -> pm-pt -> pm-pa`
+主链：`scope -> sum -> mind -> feat -> page -> prd -> rev -> mock -> note`
 
 ## Runtime 校验
 
-进入每个阶段前，可执行 `stage-gate.ps1` 进行前置条件的运行时校验：
+进入每个阶段前，可执行：
 
 ```powershell
-# 示例：校验是否满足进入 pm-prd 的前置条件
-.\scripts\stage-gate.ps1 -Target pm-prd
+.\scripts\stage-gate.ps1 -Target prd
 ```
 
-校验通过（exit 0）后模型再开始生成。校验失败（exit 1）时输出阻塞原因，不进入该阶段。
+## 软阶段
 
-**强制门禁内容（所有有状态阶段均适用）：**
+`scope / sum / mind / feat` 为软阶段，无强制文件前置，直接放行。
 
-1. `blockers` 非空时直接阻止，并列出每条阻塞文本
-2. `pending_confirmations` 非空时直接阻止，并列出每条待确认文本
-3. 对应上游产物的稳定版文件必须在磁盘上实际存在
+## 强制门禁
 
-`pm-go / pm-scope / pm-analysis / pm-mm / pm-fl` 为软阶段，无强制文件前置，直接放行。
+从 `page` 开始：
 
-## 门禁
+1. `blockers` 必须为空
+2. `pending_confirmations` 必须为空
+3. 所需 `stable_baselines` 必须存在
+4. 锚点文件必须真实存在
 
-- `pm-scope` 前：已有项目目录和当前任务描述
-- `pm-analysis` 前：范围判定已完成，且已形成足够支撑分析的基础信息
-- `pm-mm` 前：分析产物已足以支撑结构化表达；如项目仍缺少基础总览，应先完成分析简报
-- `pm-fl` 前：需求结构应已清晰到足以形成能力清单
-- `pm-ps` 前：功能清单应已稳定，且未再频繁变动能力边界
-- `pm-prd` 前：功能清单与页面结构都应稳定，且功能清单中的模块角色与版本边界已足以支撑 PRD 落位
-- `pm-rv` 前：当前 PRD 应已形成可评审版本，并完成版本判定
-- `pm-pt` 前：PRD 应已形成稳定版，且页面承载信息足以支撑原型页面与关键区域映射
-- `pm-pa` 前：PRD 与 Prototype 应已形成稳定组合
+## 阶段前置
 
-## 回退
-
-- 能力边界问题：回退 `pm-fl`
-- 页面承载问题：回退 `pm-ps`
-- 执行规格问题：留在 `pm-prd`
-- 表现层问题：留在 `pm-pt`
-- 标注层问题：留在 `pm-pa`
+- `scope`：已有项目目录和当前任务描述
+- `sum`：范围判定已完成
+- `mind`：分析简报已足以支撑结构化表达
+- `feat`：需求已清晰到足以形成能力清单
+- `page`：功能清单已稳定
+- `prd`：功能清单与页面结构已稳定
+- `rev`：当前评审对象已形成可评审版本
+- `mock`：PRD 已稳定
+- `note`：PRD 与 Prototype 已形成稳定组合

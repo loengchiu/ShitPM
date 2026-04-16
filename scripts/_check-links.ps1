@@ -64,7 +64,7 @@ Write-Host "`n=== Cross-Reference: commands/ vs skills/ ===" -ForegroundColor Cy
 $skillNames   = Get-ShitPmSkillNames -ShitPmRoot $root
 $commandFiles = Get-ChildItem -LiteralPath (Join-Path $root 'commands') -File |
     ForEach-Object { [System.IO.Path]::GetFileNameWithoutExtension($_.Name) }
-$internalSkills = @('pm-scope')
+$internalSkills = @('scope')
 foreach ($s in $skillNames) {
     if ($internalSkills -contains $s) {
         Write-Host ("  skill={0,-15} command=internal (skipped)" -f $s) -ForegroundColor DarkGray
@@ -83,3 +83,4 @@ if ($allOk) {
     Write-Error "some checks failed"
     exit 1
 }
+

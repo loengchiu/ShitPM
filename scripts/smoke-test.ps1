@@ -15,26 +15,32 @@ $requiredFiles = @(
     'docs\host-matrix.md',
     'docs\real-project-test.md',
     'docs\release-checklist.md',
-    'skills\pm-go\SKILL.md',
-    'skills\pm-scope\SKILL.md',
-    'skills\pm-analysis\SKILL.md',
-    'skills\pm-mm\SKILL.md',
-    'skills\pm-fl\SKILL.md',
-    'skills\pm-ps\SKILL.md',
-    'skills\pm-prd\SKILL.md',
-    'skills\pm-rv\SKILL.md',
-    'skills\pm-fix\SKILL.md',
-    'skills\pm-pt\SKILL.md',
-    'skills\pm-pa\SKILL.md',
-    'commands\pm-go.md',
-    'commands\pm-mm.md',
-    'commands\pm-fl.md',
-    'commands\pm-ps.md',
-    'commands\pm-prd.md',
-    'commands\pm-rv.md',
-    'commands\pm-fix.md',
-    'commands\pm-pt.md',
-    'commands\pm-pa.md',
+    'AGENTS.md',
+    'INSTALL.md',
+    'CLAUDE.md',
+    '.github\copilot-instructions.md',
+    '.trae\rules\shitpm-router.md',
+    '.antigravity\rules\shitpm-router.md',
+    'skills\scope\SKILL.md',
+    'skills\sum\SKILL.md',
+    'skills\mind\SKILL.md',
+    'skills\feat\SKILL.md',
+    'skills\page\SKILL.md',
+    'skills\prd\SKILL.md',
+    'skills\rev\SKILL.md',
+    'skills\fix\SKILL.md',
+    'skills\mock\SKILL.md',
+    'skills\note\SKILL.md',
+    'commands\init.md',
+    'commands\sum.md',
+    'commands\mind.md',
+    'commands\feat.md',
+    'commands\page.md',
+    'commands\prd.md',
+    'commands\rev.md',
+    'commands\fix.md',
+    'commands\mock.md',
+    'commands\note.md',
     'templates\feature-list.md',
     'templates\page-structure.md',
     'templates\prd.md',
@@ -53,6 +59,7 @@ $requiredFiles = @(
     'scripts\status-write.ps1',
     'scripts\stage-gate.ps1',
     'scripts\gate-regression.ps1',
+    'scripts\migrate-stage-names.ps1',
     'scripts\detect-hosts.ps1',
     'installers\install.ps1',
     'installers\uninstall.ps1',
@@ -80,7 +87,7 @@ if ($missing.Count -gt 0) {
 $skillDirs = Get-ChildItem -LiteralPath (Join-Path $projectRoot 'skills') -Directory | Select-Object -ExpandProperty Name | Sort-Object
 $commandFiles = Get-ChildItem -LiteralPath (Join-Path $projectRoot 'commands') -File | ForEach-Object { [System.IO.Path]::GetFileNameWithoutExtension($_.Name) } | Sort-Object
 
-$publicSkills = @('pm-go', 'pm-mm', 'pm-fl', 'pm-ps', 'pm-prd', 'pm-rv', 'pm-fix', 'pm-pt', 'pm-pa')
+$publicSkills = @('init', 'sum', 'mind', 'feat', 'page', 'prd', 'rev', 'fix', 'mock', 'note')
 
 $missingCommands = @()
 foreach ($skill in $publicSkills) {
@@ -113,3 +120,4 @@ $result = [pscustomobject]@{
 }
 
 $result | ConvertTo-Json -Depth 3
+

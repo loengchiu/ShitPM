@@ -1,68 +1,36 @@
 # 故障排查
 
-## 1. 看不到 `pm-go`
+## 1. `/init` 没生效
 
 检查：
 
-- 是否已执行宿主安装脚本
-- 是否已执行 verify 脚本
+- 当前会话是否绑定到正确项目目录
+- 当前项目下是否生成 `docs/project-status.json`
 
-## 2. `pm-go` 范围判定结果不稳定
-
-检查：
-
-- 是否显式给出了项目目录和当前任务
-- `docs/project-status.json` 是否存在旧版锚点干扰
-- 是否把复杂任务误当成单一任务直接推进了下游产物
-
-## 3. 读取不到模板或契约
+## 2. 短命令看不到
 
 检查：
 
-- `templates` 是否已暴露
-- `contracts` 是否已暴露
+- 宿主是否已安装 ShitPM
+- `scripts/verify-mappings.ps1` 是否通过
 
-## 3.1 看不到命令文档
-
-检查：
-
-- `shitpm-commands` 是否已安装
-- 宿主是否支持直接暴露命令文档
-- 如宿主不支持，改为直接调用同名短技能
-
-## 4. 版本锚点混乱
+## 3. 不能继续推进
 
 检查：
 
-- `docs/project-status.json`
-- 当前显式路径与 `stable_baselines` 是否一致
+- `blockers`
+- `pending_confirmations`
+- `stable_baselines`
+- 锚点文件是否真实存在
 
-## 5. PRD 继续引用旧版上游
+## 4. 评审或修复阶段被阻止
 
-检查：
+`page / prd / rev / fix` 除全局路由外，还保留各自的最小前置自检。
 
-- 是否已刷新 `stable_baselines.feature_list`
-- 是否已刷新 `stable_baselines.page_structure`
-- 是否在输入中显式给出当前文件路径
+## 5. 旧项目阶段名还是 `pm-*`
 
-## 6. 看不到 `pm-pt` / `pm-pa`
+执行：
 
-检查：
-
-- 是否重新执行了安装脚本
-- verify 是否仍为 `verify:ok`
-- 宿主技能目录里是否已经刷新短技能名
-
-## 7. `pm-go` 总是给出“上下文推断”而不是“真实状态判断”
-
-检查：
-
-- 当前轮是否有可验证的执行证据（真实读取状态、真实 gate 校验、真实状态更新）
-- 宿主是否只暴露了技能与模板，但没有完成状态机制集成
-- `docs/project-status.json` 是否存在、是否为最新版本、字段是否完整
-
-处理建议：
-
-- 先通过 `pm-go` 明确要求“先恢复当前状态再判断是否可推进”
-- 若仍为上下文推断，按提示修复状态文件一致性后重试
-- 在宿主侧补齐状态机制集成后，再以“真实状态判断”口径推进
+```powershell
+powershell -File .\scripts\migrate-stage-names.ps1
+```

@@ -25,13 +25,12 @@ if (-not (Test-Path -LiteralPath $hostSkills)) {
 $backupRoot = New-BackupRoot -HostBase $hostBase
 
 $legacySkillNames = @(
-    'pm-analysis',
     'pm-discovery',
     'pm-feature-list',
     'pm-followup-interview',
     'pm-mindmap',
     'pm-orchestrator',
-    'pm-page-structure',
+    'notege-structure',
     'pm-prototype',
     'pm-prototype-annotation',
     'pm-review',
@@ -54,3 +53,4 @@ foreach ($skillName in (Get-ShitPmSkillNames -ShitPmRoot $shitpmRoot)) {
 Ensure-Junction -LinkPath $hostCommands -TargetPath $sourceCommands -BackupRoot $backupRoot
 Ensure-Junction -LinkPath $hostTemplates -TargetPath $sourceTemplates -BackupRoot $backupRoot
 Ensure-Junction -LinkPath $hostContracts -TargetPath $sourceContracts -BackupRoot $backupRoot
+
