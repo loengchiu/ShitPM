@@ -26,4 +26,6 @@ foreach ($shared in @('shitpm-commands', 'shitpm-templates', 'shitpm-contracts')
     Remove-SafeJunctionOrDir -Path (Join-Path $hostBase $shared)
 }
 
+& (Join-Path $shitpmRoot 'scripts\remove-global-rules.ps1') -HostKind 'copilot'
+
 Write-Output 'uninstall:ok'

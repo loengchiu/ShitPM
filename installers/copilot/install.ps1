@@ -14,7 +14,9 @@ if (-not (Test-Path -LiteralPath $hostBase)) {
 
 try {
     & (Join-Path $scriptsDir 'write-mappings.ps1') -HostKind 'copilot'
+    & (Join-Path $scriptsDir 'write-global-rules.ps1') -HostKind 'copilot'
     & (Join-Path $scriptsDir 'verify-mappings.ps1') -HostKind 'copilot'
+    & (Join-Path $scriptsDir 'verify-global-rules.ps1') -HostKind 'copilot'
     exit 0
 } catch {
     Write-Error $_
