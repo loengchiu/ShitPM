@@ -4,7 +4,11 @@ param(
 
 $base = switch ($HostKind) {
     'copilot'     { Join-Path $env:USERPROFILE '.copilot' }
-    'codex'       { Join-Path $env:USERPROFILE '.agents' }
+    'codex'       {
+        $new = Join-Path $env:USERPROFILE '.codex'
+        $legacy = Join-Path $env:USERPROFILE '.agents'
+        if (Test-Path -LiteralPath $new) { $new } else { $legacy }
+    }
     'cursor'      { Join-Path $env:USERPROFILE '.cursor' }
     'windsurf'    { Join-Path $env:USERPROFILE '.windsurf' }
     'trae'        { Join-Path $env:USERPROFILE '.trae' }

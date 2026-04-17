@@ -22,6 +22,7 @@ $requiredFiles = @(
     '.trae\rules\shitpm-router.md',
     '.antigravity\rules\shitpm-router.md',
     'skills\scope\SKILL.md',
+    'skills\start\SKILL.md',
     'skills\sum\SKILL.md',
     'skills\mind\SKILL.md',
     'skills\feat\SKILL.md',

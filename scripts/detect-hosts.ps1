@@ -3,7 +3,8 @@
 
 $knownHosts = @(
     [pscustomobject]@{ Kind = 'copilot'; Base = (Join-Path $env:USERPROFILE '.copilot') },
-    [pscustomobject]@{ Kind = 'codex';   Base = (Join-Path $env:USERPROFILE '.agents') },
+    # Codex CLI / desktop uses ~/.codex; some older setups used ~/.agents.
+    [pscustomobject]@{ Kind = 'codex';   Base = (Join-Path $env:USERPROFILE '.codex') },
     [pscustomobject]@{ Kind = 'cursor';  Base = (Join-Path $env:USERPROFILE '.cursor') },
     [pscustomobject]@{ Kind = 'windsurf'; Base = (Join-Path $env:USERPROFILE '.windsurf') },
     [pscustomobject]@{ Kind = 'trae';    Base = (Join-Path $env:USERPROFILE '.trae') },
@@ -14,6 +15,15 @@ $detected = @()
 foreach ($h in $knownHosts) {
     if (Test-Path -LiteralPath $h.Base) {
         $detected += $h.Kind
+    }
+}
+
+# Back-compat: if ~/.agents exists but ~/.codex does not, still treat as codex host.
+$legacyCodexBase = Join-Path $env:USERPROFILE '.agents'
+$newCodexBase = Join-Path $env:USERPROFILE '.codex'
+if ((-not (Test-Path -LiteralPath $newCodexBase)) -and (Test-Path -LiteralPath $legacyCodexBase)) {
+    if ($detected -notcontains 'codex') {
+        $detected += 'codex'
     }
 }
 
