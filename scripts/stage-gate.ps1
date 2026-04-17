@@ -20,22 +20,22 @@ function Pass([string]$msg) {
 
 function Assert-FileExists([string]$label, [string]$relPath) {
     if (-not $relPath) {
-        Fail "$label missing stable baseline. Confirm current stable version or repair project state first."
+        Fail "$label 缺少稳定锚点。请先确认当前稳定版本，或修复项目状态。"
     }
     $full = Join-Path $root ($relPath -replace '/', '\')
     if (-not (Test-Path -LiteralPath $full)) {
-        Fail "$label file does not exist: $relPath"
+        Fail "$label 文件不存在：$relPath"
     }
 }
 
 $softStages = @('scope', 'sum', 'mind', 'feat')
 if ($softStages -contains $Target) {
-    Pass 'soft stage with no required file prerequisites'
+    Pass '当前为软阶段，无需检查文件前置条件'
     exit 0
 }
 
 if (-not (Test-Path -LiteralPath $statusFile)) {
-    Fail 'project-status.json not found. Initialize the project with /init first.'
+    Fail '未找到 docs/project-status.json。请先执行 /init 初始化当前项目。'
 }
 
 $s = Get-Content -LiteralPath $statusFile -Raw | ConvertFrom-Json
@@ -43,25 +43,25 @@ $s = Get-Content -LiteralPath $statusFile -Raw | ConvertFrom-Json
 $blockers = @($s.blockers | Where-Object { $_ })
 if ($blockers.Count -gt 0) {
     $list = ($blockers | ForEach-Object { "  - $_" }) -join "`n"
-    Fail "unresolved blockers exist:`n$list"
+    Fail "存在未解决阻塞项：`n$list"
 }
 
 $pending = @($s.pending_confirmations | Where-Object { $_ })
 if ($pending.Count -gt 0) {
     $list = ($pending | ForEach-Object { "  - $_" }) -join "`n"
-    Fail "pending confirmations exist:`n$list"
+    Fail "存在待确认事项：`n$list"
 }
 
 switch ($Target) {
     'page' {
         Assert-FileExists 'Feature List [stable_baselines]' $s.stable_baselines.feature_list
-        Pass 'feature list stable baseline exists'
+        Pass '功能清单稳定锚点存在'
     }
 
     'prd' {
         Assert-FileExists 'Feature List [stable_baselines]' $s.stable_baselines.feature_list
         Assert-FileExists 'Page Structure [stable_baselines]' $s.stable_baselines.page_structure
-        Pass 'feature list and page structure stable baselines exist'
+        Pass '功能清单和页面结构稳定锚点存在'
     }
 
     'rev' {
@@ -71,7 +71,7 @@ switch ($Target) {
         $hasPrd = [bool]($s.latest_artifacts.prd -or $s.stable_baselines.prd)
 
         if (-not ($hasMindmap -or $hasFeatureList -or $hasPageStructure -or $hasPrd)) {
-            Fail 'no reviewable object found. Generate at least one of mindmap, feature list, page structure, or prd first.'
+            Fail '未找到可评审对象。请先生成思维导图、功能清单、页面结构或 PRD 中的至少一个。'
         }
 
         if ($hasMindmap) {
@@ -93,7 +93,7 @@ switch ($Target) {
             Assert-FileExists 'PRD [stable_baselines]' $s.stable_baselines.prd
         }
 
-        Pass 'at least one reviewable object exists'
+        Pass '已找到至少一个可评审对象'
     }
 
     'fix' {
@@ -103,7 +103,7 @@ switch ($Target) {
         $hasPrd = [bool]($s.latest_artifacts.prd -or $s.stable_baselines.prd)
 
         if (-not ($hasMindmap -or $hasFeatureList -or $hasPageStructure -or $hasPrd)) {
-            Fail 'no fixable object found. Generate at least one of mindmap, feature list, page structure, or prd first.'
+            Fail '未找到可修复对象。请先生成思维导图、功能清单、页面结构或 PRD 中的至少一个。'
         }
 
         if ($hasMindmap) {
@@ -125,18 +125,18 @@ switch ($Target) {
             Assert-FileExists 'PRD [stable_baselines]' $s.stable_baselines.prd
         }
 
-        Pass 'at least one fixable object exists'
+        Pass '已找到至少一个可修复对象'
     }
 
     'mock' {
         Assert-FileExists 'PRD [stable_baselines]' $s.stable_baselines.prd
-        Pass 'prd stable baseline exists'
+        Pass 'PRD 稳定锚点存在'
     }
 
     'note' {
         Assert-FileExists 'PRD [stable_baselines]' $s.stable_baselines.prd
         Assert-FileExists 'Prototype [stable_baselines]' $s.stable_baselines.prototype
-        Pass 'prd and prototype stable baselines exist'
+        Pass 'PRD 和原型稳定锚点存在'
     }
 }
 
