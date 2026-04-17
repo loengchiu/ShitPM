@@ -14,12 +14,19 @@
 
 ### 1.2 核心业务流程
 
-```mermaid
-flowchart TD
-    A[角色A] -->|操作| B{判断节点}
-    B -->|条件1| C[结果1]
-    B -->|条件2| D[结果2]
-```
+先用中文写清流程：
+
+- [角色A] 发起 [动作]
+- 系统校验 [条件]
+- 满足 [条件1] 时进入 [结果1]
+- 满足 [条件2] 时进入 [结果2]
+
+对应图表文件：
+
+- `docs/diagrams/prd/p01-core-flow.drawio`
+- `docs/diagrams/prd/p01-core-flow.svg`
+
+![核心业务流程](../diagrams/prd/p01-core-flow.svg)
 
 ### 1.3 与现有系统的关系
 
@@ -72,10 +79,18 @@ flowchart TD
 
 ### 4.1 核心实体关系
 
-```mermaid
-erDiagram
-    实体A ||--o{ 实体B : "关系"
-```
+先用中文写清实体关系：
+
+- [实体A] 与 [实体B] 的关系是：[一对多 / 一对一 / 多对多]
+- [实体A] 由 [来源] 产生，核心标识为 [字段]
+- [实体B] 依赖 [实体A] 的 [字段/关系] 建立关联
+
+对应图表文件：
+
+- `docs/diagrams/prd/p02-entity-relation.drawio`
+- `docs/diagrams/prd/p02-entity-relation.svg`
+
+![核心实体关系](../diagrams/prd/p02-entity-relation.svg)
 
 ### 4.2 字段定义
 
@@ -261,12 +276,18 @@ Then [预期结果]
 
 ### 6.1 状态流转
 
-```mermaid
-stateDiagram-v2
-    [*] --> 状态A
-    状态A --> 状态B : 触发条件
-    状态B --> 状态C : 触发条件
-```
+先用中文写清状态流转：
+
+- **[当前状态]** 在触发 [条件] 后变为 **[目标状态]**
+- 状态变更后执行 [动作]，通知 [对象]
+- 如遇 [异常/边界场景]，按 [处理方式] 处理
+
+对应图表文件：
+
+- `docs/diagrams/prd/p03-state-flow.drawio`
+- `docs/diagrams/prd/p03-state-flow.svg`
+
+![状态流转图](../diagrams/prd/p03-state-flow.svg)
 
 **[当前状态]** → 触发 [条件] → 变为 **[目标状态]**，执行 [动作]，通知 [对象]
 

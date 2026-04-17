@@ -14,7 +14,7 @@ $contractsDir = $resolved.Contracts
 $requiredSkills = @('start', 'scope', 'sum', 'mind', 'feat', 'page', 'prd', 'rev', 'fix', 'mock', 'note')
 $requiredCommands = @('start.md', 'sum.md', 'mind.md', 'feat.md', 'page.md', 'prd.md', 'rev.md', 'fix.md', 'mock.md', 'note.md')
 $requiredTemplates = @('project-brief-lite.md', 'mindmap-spec.md', 'feature-list.md', 'page-structure.md', 'prd.md', 'review-checklist.md', 'fix-record.md', 'prototype-shared.css', 'prototype-shared.js', 'prototype-visual-baseline.md', 'prototype-annotation.md')
-$requiredContracts = @('workflow-state.md', 'done-criteria.md', 'stage-gates.md', 'error-handling.md')
+$requiredContracts = @('workflow-state.md', 'done-criteria.md', 'stage-gates.md', 'error-handling.md', 'diagram-style.md')
 $missing = @()
 
 if (-not (Test-Path -LiteralPath $skillsDir)) {

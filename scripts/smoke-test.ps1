@@ -55,6 +55,7 @@ $requiredFiles = @(
     'templates\prototype-annotation.md',
     'templates\copilot-instructions.md',
     'contracts\artifact-schema.md',
+    'contracts\diagram-style.md',
     'contracts\workflow-state.md',
     'contracts\done-criteria.md',
     'contracts\stage-gates.md',

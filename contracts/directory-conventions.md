@@ -5,6 +5,7 @@
 ```text
 docs/
   briefs/
+  diagrams/
   mindmaps/
   feature-lists/
   page-structures/
@@ -16,11 +17,21 @@ docs/
   wiki-sync/
 ```
 
+其中图表目录约定：
+
+```text
+docs/
+  diagrams/
+    prd/
+```
+
 命名规则：
 
 - 功能清单：`YYYY-MM-DD_feature-list-<topic>-vN.md`
 - 页面清单：`YYYY-MM-DD_page-structure-<topic>-vN.md`
 - PRD：`YYYY-MM-DD_prd-<topic>-vN.md`
+- PRD 图表源文件：`docs/diagrams/prd/pNN-<topic>.drawio`
+- PRD 图表预览文件：`docs/diagrams/prd/pNN-<topic>.svg`
 - 原型：`YYYY-MM-DD_prototype-<topic>-<page>-vN.html`
 - 注释原型：`YYYY-MM-DD_prototype-annotation-<topic>-<page>-vN.html`
 - 视觉基线：`docs/prototypes/visual-baseline.md`（固定路径，不加日期和版本后缀，每个项目只有一个）
