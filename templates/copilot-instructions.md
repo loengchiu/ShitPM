@@ -7,7 +7,7 @@
 - 默认入口是 **自然语言 + 项目根目录 `AGENTS.md`**
 - 当前项目已初始化时，模型应优先读取 `docs/project-status.json`
 - 若用户使用短命令，则直接按命令进入对应阶段：
-  - `/init /sum /mind /feat /page /prd /mock /rev /fix /note`
+  - `/start /sum /mind /feat /page /prd /mock /rev /fix /note`
 - 若用户使用自然语言，则按 `AGENTS.md` 的自然语言路由规则执行
 - 若未真实读取状态或未完成门禁检查，不得表述为“已确认可推进”
 

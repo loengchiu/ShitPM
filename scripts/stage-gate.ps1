@@ -35,7 +35,7 @@ if ($softStages -contains $Target) {
 }
 
 if (-not (Test-Path -LiteralPath $statusFile)) {
-    Fail '未找到 docs/project-status.json。请先执行 /init 初始化当前项目。'
+    Fail '未找到 docs/project-status.json。请先执行 /start 初始化当前项目。'
 }
 
 $s = Get-Content -LiteralPath $statusFile -Raw | ConvertFrom-Json

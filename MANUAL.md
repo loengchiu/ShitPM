@@ -5,14 +5,14 @@
 当前默认入口不是 `pm-go`，而是：
 
 - 自然语言
-- 或短命令 `/init /sum /mind /feat /page /prd /mock /rev /fix /note`
+- 或短命令 `/start /sum /mind /feat /page /prd /mock /rev /fix /note`
 
 项目根目录存在 `docs/project-status.json` 时，ShitPM 自动激活并读取 `AGENTS.md`。
 
 ## 最短路径
 
 ```text
-/init
+/start
 老板让我做一个供应商准入审批流程
 继续下一步
 /feat
@@ -69,4 +69,4 @@
 
 ## 初始化
 
-`/init` 会在当前项目创建 `docs/project-status.json`，作为 ShitPM 激活开关和状态源。
+`/start` 会在当前项目创建 `docs/project-status.json`，作为 ShitPM 激活开关和状态源。

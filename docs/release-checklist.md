@@ -8,7 +8,7 @@
 - `.antigravity/rules/shitpm-router.md` 存在
 - `skills/pm-go` 已删除
 - `commands/pm-go.md` 已删除
-- `commands/init.md` 存在
+- `commands/start.md` 存在
 - `commands/sum.md / mind.md / feat.md / page.md / prd.md / rev.md / fix.md / mock.md / note.md` 存在
 - `smoke-test.ps1` 通过
 - `verify-mappings.ps1` 通过

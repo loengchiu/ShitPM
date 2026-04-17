@@ -21,7 +21,7 @@ powershell -File .\installers\install.ps1
 在业务项目里执行：
 
 ```text
-/init
+/start
 ```
 
 系统会创建 `docs/project-status.json`，从此该项目进入 ShitPM 工作流。
@@ -30,6 +30,6 @@ powershell -File .\installers\install.ps1
 
 安装完成后，公开入口为：
 
-`/init /sum /mind /feat /page /prd /mock /rev /fix /note`
+`/start /sum /mind /feat /page /prd /mock /rev /fix /note`
 
 也支持直接自然语言。

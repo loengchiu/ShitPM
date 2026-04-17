@@ -3,11 +3,11 @@
 ## 默认入口
 
 - 自然语言
-- 或短命令：`/init /sum /mind /feat /page /prd /mock /rev /fix /note`
+- 或短命令：`/start /sum /mind /feat /page /prd /mock /rev /fix /note`
 
 ## 推荐口径
 
-- 新项目先 `/init`
+- 新项目先 `/start`
 - 之后直接说需求
 - 想进入明确阶段时再用短命令
 

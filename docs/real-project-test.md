@@ -5,12 +5,12 @@
 默认入口为：
 
 - 自然语言
-- 或短命令 `/init /sum /mind /feat /page /prd /mock /rev /fix /note`
+- 或短命令 `/start /sum /mind /feat /page /prd /mock /rev /fix /note`
 
 ## 最小全链路
 
 ```text
-/init
+/start
 老板让我做一个供应商准入审批流程，采购部提需求，财务部审批，通过后自动建档。
 继续下一步
 /feat

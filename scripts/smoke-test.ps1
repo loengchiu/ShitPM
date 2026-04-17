@@ -31,7 +31,7 @@ $requiredFiles = @(
     'skills\fix\SKILL.md',
     'skills\mock\SKILL.md',
     'skills\note\SKILL.md',
-    'commands\init.md',
+    'commands\start.md',
     'commands\sum.md',
     'commands\mind.md',
     'commands\feat.md',
@@ -87,7 +87,7 @@ if ($missing.Count -gt 0) {
 $skillDirs = Get-ChildItem -LiteralPath (Join-Path $projectRoot 'skills') -Directory | Select-Object -ExpandProperty Name | Sort-Object
 $commandFiles = Get-ChildItem -LiteralPath (Join-Path $projectRoot 'commands') -File | ForEach-Object { [System.IO.Path]::GetFileNameWithoutExtension($_.Name) } | Sort-Object
 
-$publicSkills = @('init', 'sum', 'mind', 'feat', 'page', 'prd', 'rev', 'fix', 'mock', 'note')
+$publicSkills = @('start', 'sum', 'mind', 'feat', 'page', 'prd', 'rev', 'fix', 'mock', 'note')
 
 $missingCommands = @()
 foreach ($skill in $publicSkills) {

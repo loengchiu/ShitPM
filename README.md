@@ -3,7 +3,7 @@
 ShitPM 是一套运行在 AI IDE 中的 PM 工作流系统。  
 项目初始化后，默认入口变为 **自然语言 + 项目根目录 `AGENTS.md`**，也支持短命令：
 
-`/init /sum /mind /feat /page /prd /mock /rev /fix /note`
+`/start /sum /mind /feat /page /prd /mock /rev /fix /note`
 
 ## 主链
 
@@ -26,13 +26,13 @@ ShitPM 是一套运行在 AI IDE 中的 PM 工作流系统。
 ## 使用方式
 
 1. 安装 ShitPM
-2. 在业务项目中执行 `/init`
+2. 在业务项目中执行 `/start`
 3. 后续直接自然语言工作，或使用短命令快速进入阶段
 
 示例：
 
 ```text
-/init
+/start
 老板让我做一个供应商准入审批流程
 /feat
 /page

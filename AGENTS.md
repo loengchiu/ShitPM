@@ -2,7 +2,7 @@
 
 当用户提出产品经理相关工作需求时：
 1. 先读取当前项目的 `docs/project-status.json` 了解当前项目状态和阶段
-   - 如果该文件不存在，告知用户："当前项目尚未初始化 ShitPM，请回复'初始化 ShitPM'来启动"
+   - 如果该文件不存在，告知用户："当前项目尚未初始化 ShitPM，请执行 `/start` 或回复“初始化 ShitPM”来启动"
 2. 根据用户意图和当前状态，读取 `skills/{阶段}/SKILL.md` 获取执行规则
 3. 按该 skill 的规则执行任务
 4. 完成后更新当前项目的 `docs/project-status.json`
@@ -13,7 +13,7 @@
 
 | 命令 | 对应阶段 | 说明 |
 |------|----------|------|
-| `/init` | 初始化项目 | 在当前项目创建 `docs/project-status.json`，写入初始状态 |
+| `/start` | 初始化项目 | 在当前项目创建 `docs/project-status.json`，写入初始状态 |
 | `/sum` | 项目简报 | `sum` |
 | `/mind` | 思维导图 | `mind` |
 | `/feat` | 功能清单 | `feat` |
