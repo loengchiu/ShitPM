@@ -1,5 +1,4 @@
-param(
-    # 可选：显式指定宿主，不指定则自动探测
+﻿param(
     [string[]]$Hosts
 )
 
@@ -8,7 +7,15 @@ $shitpmRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $scriptsDir = Join-Path $shitpmRoot 'scripts'
 
 if ($Hosts -and $Hosts.Count -gt 0) {
-    $targetHosts = $Hosts
+    $targetHosts = @()
+    foreach ($value in $Hosts) {
+        foreach ($part in ($value -split ',')) {
+            $trimmed = $part.Trim()
+            if (-not [string]::IsNullOrWhiteSpace($trimmed)) {
+                $targetHosts += $trimmed
+            }
+        }
+    }
 } else {
     $targetHosts = & (Join-Path $scriptsDir 'detect-hosts.ps1')
 }
@@ -31,36 +38,26 @@ foreach ($hostKind in $targetHosts) {
         & $individualUninstaller
         $ok = ($LASTEXITCODE -eq 0)
     } else {
-        # 通用卸载：移除 skills junction 和共享目录
         . (Join-Path $scriptsDir 'common-host.ps1')
         $resolved = & (Join-Path $scriptsDir 'resolve-paths.ps1') -HostKind $hostKind
-        $hostBase  = $resolved.Base
-        $skillsDir = $resolved.Skills
-
-        function Remove-SafeJunctionOrDir {
-            param([string]$Path)
-            if (-not (Test-Path -LiteralPath $Path)) { return }
-            $item = Get-Item -LiteralPath $Path -Force
-            if ($item.LinkType -eq 'Junction') {
-                [System.IO.Directory]::Delete($Path, $false)
-            } else {
-                Remove-Item -LiteralPath $Path -Force -Recurse
-            }
-        }
+        $hostBase = $resolved.Base
+        $hostBundle = $resolved.Bundle
+        $legacySkillsDir = Join-Path $hostBase 'skills'
 
         foreach ($skillName in (Get-ShitPmSkillNames -ShitPmRoot $shitpmRoot)) {
-            Remove-SafeJunctionOrDir -Path (Join-Path $skillsDir $skillName)
+            Remove-SafeJunctionOrDir -Path (Join-Path $legacySkillsDir $skillName)
         }
 
         foreach ($shared in @('shitpm-commands', 'shitpm-templates', 'shitpm-contracts')) {
             Remove-SafeJunctionOrDir -Path (Join-Path $hostBase $shared)
         }
 
+        Remove-SafeJunctionOrDir -Path $hostBundle
         $ok = $true
     }
 
     $results += [pscustomobject]@{
-        Host   = $hostKind
+        Host = $hostKind
         Status = if ($ok) { 'ok' } else { 'FAILED' }
     }
 }
@@ -72,5 +69,9 @@ $results | ForEach-Object {
 }
 
 $failed = $results | Where-Object { $_.Status -ne 'ok' }
-if ($failed) { exit 1 }
+if ($failed) {
+    exit 1
+}
+
 exit 0
+

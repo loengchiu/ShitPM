@@ -7,20 +7,10 @@ param(
 $resolved = & (Join-Path $PSScriptRoot 'resolve-paths.ps1') -HostKind $HostKind
 
 $hostBase = $resolved.Base
-$hostSkills = $resolved.Skills
-$hostCommands = $resolved.Commands
-$hostTemplates = $resolved.Templates
-$hostContracts = $resolved.Contracts
+$hostBundle = $resolved.Bundle
+$legacyHostSkills = Join-Path $hostBase 'skills'
 
 $shitpmRoot = Get-ShitPmRoot
-$sourceSkillsDir = Join-Path $shitpmRoot 'skills'
-$sourceCommands = Join-Path $shitpmRoot 'commands'
-$sourceTemplates = Join-Path $shitpmRoot 'templates'
-$sourceContracts = Join-Path $shitpmRoot 'contracts'
-
-if (-not (Test-Path -LiteralPath $hostSkills)) {
-    New-Item -ItemType Directory -Force -Path $hostSkills | Out-Null
-}
 
 $backupRoot = New-BackupRoot -HostBase $hostBase
 
@@ -38,19 +28,25 @@ $legacySkillNames = @(
 )
 
 foreach ($legacySkill in $legacySkillNames) {
-    $legacyPath = Join-Path $hostSkills $legacySkill
+    $legacyPath = Join-Path $legacyHostSkills $legacySkill
     if (Test-Path -LiteralPath $legacyPath) {
         Backup-ExistingItem -Path $legacyPath -BackupRoot $backupRoot
     }
 }
 
 foreach ($skillName in (Get-ShitPmSkillNames -ShitPmRoot $shitpmRoot)) {
-    $source = Join-Path $sourceSkillsDir $skillName
-    $dest = Join-Path $hostSkills $skillName
-    Ensure-Junction -LinkPath $dest -TargetPath $source -BackupRoot $backupRoot
+    $legacyPath = Join-Path $legacyHostSkills $skillName
+    if (Test-Path -LiteralPath $legacyPath) {
+        Backup-ExistingItem -Path $legacyPath -BackupRoot $backupRoot
+    }
 }
 
-Ensure-Junction -LinkPath $hostCommands -TargetPath $sourceCommands -BackupRoot $backupRoot
-Ensure-Junction -LinkPath $hostTemplates -TargetPath $sourceTemplates -BackupRoot $backupRoot
-Ensure-Junction -LinkPath $hostContracts -TargetPath $sourceContracts -BackupRoot $backupRoot
+foreach ($legacyShared in @('shitpm-commands', 'shitpm-templates', 'shitpm-contracts')) {
+    $legacyPath = Join-Path $hostBase $legacyShared
+    if (Test-Path -LiteralPath $legacyPath) {
+        Backup-ExistingItem -Path $legacyPath -BackupRoot $backupRoot
+    }
+}
+
+Ensure-Junction -LinkPath $hostBundle -TargetPath $shitpmRoot -BackupRoot $backupRoot
 

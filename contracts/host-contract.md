@@ -8,9 +8,24 @@
 ## 宿主最小要求
 
 1. 能暴露 `skills`
-2. 能暴露共享 `templates` 与 `contracts`
-3. 能暴露 `commands`
+2. 能暴露完整 `shitpm` bundle 目录树
+3. bundle 内需保留 `skills / contracts / templates / commands` 的相对关系
 4. 能在已初始化项目中读取项目根 `AGENTS.md`
+
+## Bundle 解析
+
+- `shitpm/...` 均按当前 AI 宿主根目录解析
+- 不得按当前项目工作区解析这些路径
+- 不得假设 `contracts / templates / commands` 被拆到不同目录
+- 典型宿主根目录示例：
+  - `.agents/`
+  - `.codex/`
+  - `.copilot/`
+- 例如：
+  - `shitpm/templates/prd.md`
+  - `shitpm/contracts/done-criteria.md`
+  - `shitpm/commands/prd.md`
+  都表示“宿主根目录下的 ShitPM bundle 路径”，而不是项目里的相对路径
 
 ## 状态集成能力
 
@@ -24,9 +39,9 @@
 
 ## 最小桥接校验
 
-- `scope` 可见
-- `prd` 可见
-- `rev` 可见
-- `commands` 可见
-- `templates` 可见
-- `contracts` 可见
+- `shitpm/skills/scope/SKILL.md` 可见
+- `shitpm/skills/prd/SKILL.md` 可见
+- `shitpm/skills/rev/SKILL.md` 可见
+- `shitpm/commands` 可见
+- `shitpm/templates` 可见
+- `shitpm/contracts` 可见

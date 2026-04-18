@@ -13,7 +13,7 @@
 
 ## 关键阶段前置自检
 
-以下阶段除遵守 `AGENTS.md` 外，还应执行各自 skill 内的最小前置检查：
+以下阶段除遵守 `AGENTS.md` 外，还应按 `contracts/stage-gates.md` 完成前置检查：
 
 - `page`
 - `prd`

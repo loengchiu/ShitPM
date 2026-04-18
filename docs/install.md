@@ -12,8 +12,8 @@ powershell -File .\installers\install.ps1
 
 安装器会：
 
-- 连接宿主的 `skills / commands / templates / contracts`
-- 校验宿主映射
+- 连接宿主中的完整 `shitpm` bundle
+- 校验宿主 bundle 路径
 - 使宿主能够在已初始化项目中读取 `AGENTS.md`
 
 ## 项目启用

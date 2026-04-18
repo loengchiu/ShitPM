@@ -5,26 +5,18 @@ param()
 $shitpmRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\\..')).Path
 $resolved = & (Join-Path $shitpmRoot 'scripts\resolve-paths.ps1') -HostKind 'trae-cn'
 $hostBase = $resolved.Base
-$skillsDir = $resolved.Skills
-
-function Remove-SafeJunctionOrDir {
-    param([string]$Path)
-    if (-not (Test-Path -LiteralPath $Path)) { return }
-    $item = Get-Item -LiteralPath $Path -Force
-    if ($item.LinkType -eq 'Junction') {
-        [System.IO.Directory]::Delete($Path, $false)
-    } else {
-        Remove-Item -LiteralPath $Path -Force -Recurse
-    }
-}
+$hostBundle = $resolved.Bundle
+$legacySkillsDir = Join-Path $hostBase 'skills'
 
 foreach ($skillName in (Get-ShitPmSkillNames -ShitPmRoot $shitpmRoot)) {
-    Remove-SafeJunctionOrDir -Path (Join-Path $skillsDir $skillName)
+    Remove-SafeJunctionOrDir -Path (Join-Path $legacySkillsDir $skillName)
 }
 
 foreach ($shared in @('shitpm-commands', 'shitpm-templates', 'shitpm-contracts')) {
     Remove-SafeJunctionOrDir -Path (Join-Path $hostBase $shared)
 }
+
+Remove-SafeJunctionOrDir -Path $hostBundle
 
 & (Join-Path $shitpmRoot 'scripts\remove-global-rules.ps1') -HostKind 'trae-cn'
 

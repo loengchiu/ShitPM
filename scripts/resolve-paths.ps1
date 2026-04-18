@@ -16,11 +16,14 @@ $base = switch ($HostKind) {
     'antigravity' { Join-Path $env:USERPROFILE '.gemini\antigravity' }
 }
 
+[string]$bundle = Join-Path $base 'shitpm'
+
 [pscustomobject]@{
     Host = $HostKind
     Base = $base
-    Skills = (Join-Path $base 'skills')
-    Commands = (Join-Path $base 'shitpm-commands')
-    Templates = (Join-Path $base 'shitpm-templates')
-    Contracts = (Join-Path $base 'shitpm-contracts')
+    Bundle = $bundle
+    Skills = (Join-Path $bundle 'skills')
+    Commands = (Join-Path $bundle 'commands')
+    Templates = (Join-Path $bundle 'templates')
+    Contracts = (Join-Path $bundle 'contracts')
 }

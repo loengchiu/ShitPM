@@ -101,3 +101,21 @@
 > `status-write.ps1` 执行 patch 写入，只覆盖传入的字段，不影响其余字段。
 > `status-read.ps1` 可随时读取当前状态或单个字段（例：`.\scripts\status-read.ps1 -Field stable_baselines`）。
 
+## 阶段常见写入字段
+
+下列为各阶段最常见的状态写入项。  
+具体只写本轮实际发生变化的字段，不必机械全写。
+
+| 阶段 | 常见写入字段 |
+| --- | --- |
+| `scope` | `current_stage`、`scope_decomposition`、`latest_artifacts.briefs`（如补齐轻量简介）、`blockers`、`pending_confirmations` |
+| `sum` | `current_stage`、`last_action`、`next_recommended`、`context_summary`、`latest_artifacts.briefs`、`pending_confirmations` |
+| `mind` | `current_stage`、`last_action`、`next_recommended`、`context_summary`、`latest_artifacts.mindmap`、`pending_confirmations` |
+| `feat` | `current_stage`、`last_action`、`next_recommended`、`context_summary`、`latest_artifacts.feature_list`、必要时 `stable_baselines.feature_list`、`pending_confirmations` |
+| `page` | `current_stage`、`last_action`、`next_recommended`、`context_summary`、`latest_artifacts.page_structure`、必要时 `stable_baselines.page_structure` |
+| `prd` | `current_stage`、`last_action`、`next_recommended`、`context_summary`、`latest_artifacts.prd`、必要时 `stable_baselines.prd`、必要时 `prd_partition` |
+| `rev` | `current_stage`、`last_action`、`next_recommended`、`context_summary`、`latest_artifacts.reviews`、必要时 `blockers / pending_confirmations` |
+| `fix` | `current_stage`、`last_action`、`next_recommended`、`context_summary`、必要时受影响的 `stable_baselines`、`latest_artifacts.fix_records`、必要时 `blockers / pending_confirmations` |
+| `mock` | `current_stage`、`last_action`、`next_recommended`、`context_summary`、`latest_artifacts.prototypes`、必要时 `stable_baselines.prototype` |
+| `note` | `current_stage`、`last_action`、`next_recommended`、`context_summary`、`latest_artifacts.prototype_annotations`、必要时 `latest_artifacts.prd` |
+

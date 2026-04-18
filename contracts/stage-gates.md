@@ -10,6 +10,14 @@
 .\scripts\stage-gate.ps1 -Target prd
 ```
 
+## 通用前置检查
+
+除 `start` 外，进入任何阶段前都先读取 `docs/project-status.json`。
+
+- 若状态文件不存在：只允许进入 `start`，其余阶段直接阻断
+- 若状态文件存在：先检查 `blockers`、`pending_confirmations`、所需 `stable_baselines` 和锚点文件
+- 前置检查只回答“当前阶段能否继续”，不替代阶段内的业务判断
+
 ## 软阶段
 
 `scope / sum / mind / feat` 为软阶段，无强制文件前置，直接放行。
@@ -22,6 +30,15 @@
 2. `pending_confirmations` 必须为空
 3. 所需 `stable_baselines` 必须存在
 4. 锚点文件必须真实存在
+
+## 强阶段所需锚点
+
+- `page`：`stable_baselines.feature_list`
+- `prd`：`stable_baselines.feature_list`、`stable_baselines.page_structure`
+- `mock`：`stable_baselines.prd`、`stable_baselines.page_structure`
+- `note`：`stable_baselines.prd`、`stable_baselines.prototype`
+
+`rev` 和 `fix` 额外依赖当前目标文件或稳定基线，但是否可进入阶段，仍先按上面的通用前置检查判断。
 
 ## 阶段前置
 

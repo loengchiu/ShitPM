@@ -3,13 +3,16 @@
 | 宿主 | 是否支持 | 安装方式 | 探测目录 | 备注 |
 | --- | --- | --- | --- | --- |
 | GitHub Copilot | 是 | 自动/单装 | `~/.copilot` | 主线 |
-| Codex | 是 | 自动/单装 | `~/.agents` | 主线 |
+| Codex | 是 | 自动/单装 | `~/.codex`（兼容 `~/.agents`） | 主线 |
 | Antigravity | 是 | 自动（通用 junction） | `~/.gemini/antigravity` | 首发支持 |
 | Cursor | 部分 | 自动（通用 junction） | `~/.cursor` | 待验证规则加载机制 |
 | Windsurf | 部分 | 自动（通用 junction） | `~/.windsurf` | 待验证 |
-| Trae | 待定 | 待定 | `~/.trae` | 单独评估 |
+| Trae | 是 | 自动/单装 | `~/.trae` | 规则文件注入 |
+| Trae CN | 是 | 自动/单装 | `~/.trae-cn` | 规则文件注入 |
 
 ## 宿主最小要求
 
 - 宿主需能暴露短技能名
-- 宿主需允许共享 `shitpm-templates` 与 `shitpm-contracts`
+- 宿主需允许映射完整 `shitpm` 目录树
+- bundle 位于宿主根目录下，例如 `.agents/shitpm`、`.codex/shitpm`、`.copilot/shitpm`
+- skill 中出现的 `shitpm/...` 路径均应按宿主根目录解析，不按当前项目工作区解析

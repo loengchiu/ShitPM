@@ -49,6 +49,23 @@ function Ensure-Junction {
     New-Item -ItemType Junction -Path $LinkPath -Target $TargetPath | Out-Null
 }
 
+function Remove-SafeJunctionOrDir {
+    param(
+        [Parameter(Mandatory = $true)][string]$Path
+    )
+
+    if (-not (Test-Path -LiteralPath $Path)) {
+        return
+    }
+
+    $item = Get-Item -LiteralPath $Path -Force
+    if ($item.LinkType -eq 'Junction') {
+        cmd /c rmdir "$Path" | Out-Null
+    } else {
+        Remove-Item -LiteralPath $Path -Force -Recurse
+    }
+}
+
 function Get-ShitPmSkillNames {
     param(
         [Parameter(Mandatory = $true)][string]$ShitPmRoot

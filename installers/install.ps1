@@ -1,5 +1,4 @@
-param(
-    # 可选：显式指定宿主，不指定则自动探测
+﻿param(
     [string[]]$Hosts
 )
 
@@ -7,9 +6,16 @@ $ErrorActionPreference = 'Stop'
 $shitpmRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $scriptsDir = Join-Path $shitpmRoot 'scripts'
 
-# 探测或使用指定宿主
 if ($Hosts -and $Hosts.Count -gt 0) {
-    $targetHosts = $Hosts
+    $targetHosts = @()
+    foreach ($value in $Hosts) {
+        foreach ($part in ($value -split ',')) {
+            $trimmed = $part.Trim()
+            if (-not [string]::IsNullOrWhiteSpace($trimmed)) {
+                $targetHosts += $trimmed
+            }
+        }
+    }
 } else {
     $targetHosts = & (Join-Path $scriptsDir 'detect-hosts.ps1')
 }
@@ -30,11 +36,9 @@ foreach ($hostKind in $targetHosts) {
     $individualInstaller = Join-Path $shitpmRoot "installers\$hostKind\install.ps1"
 
     if (Test-Path -LiteralPath $individualInstaller) {
-        # 有专属安装器：直接调用（如 copilot / codex）
         & $individualInstaller
         $ok = ($LASTEXITCODE -eq 0)
     } else {
-        # 通用 junction 安装路径（cursor / windsurf 等，目录存在即可）
         try {
             & (Join-Path $scriptsDir 'write-mappings.ps1') -HostKind $hostKind
             & (Join-Path $scriptsDir 'verify-mappings.ps1') -HostKind $hostKind
@@ -46,7 +50,7 @@ foreach ($hostKind in $targetHosts) {
     }
 
     $results += [pscustomobject]@{
-        Host   = $hostKind
+        Host = $hostKind
         Status = if ($ok) { 'ok' } else { 'FAILED' }
     }
 }
@@ -61,4 +65,6 @@ $failed = $results | Where-Object { $_.Status -ne 'ok' }
 if ($failed) {
     exit 1
 }
+
 exit 0
+

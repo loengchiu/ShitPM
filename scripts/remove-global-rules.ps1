@@ -8,6 +8,15 @@ $userHome = $env:USERPROFILE
 $startMarker = '<!-- SHITPM GLOBAL RULES START -->'
 $endMarker = '<!-- SHITPM GLOBAL RULES END -->'
 
+function Remove-EmptyDirectory {
+    param([string]$Path)
+    if (-not (Test-Path -LiteralPath $Path)) { return }
+    $hasChildren = Get-ChildItem -LiteralPath $Path -Force -ErrorAction SilentlyContinue | Select-Object -First 1
+    if (-not $hasChildren) {
+        Remove-Item -LiteralPath $Path -Force
+    }
+}
+
 switch ($HostKind) {
     'codex' {
         $path = Join-Path $userHome '.codex\AGENTS.md'
@@ -16,30 +25,41 @@ switch ($HostKind) {
             if ($existing -match [regex]::Escape($startMarker)) {
                 $pattern = "(?s)\s*$([regex]::Escape($startMarker)).*?$([regex]::Escape($endMarker))\s*"
                 $updated = [regex]::Replace($existing, $pattern, '')
-                Set-Content -LiteralPath $path -Value $updated.Trim() -Encoding UTF8
+                $trimmed = $updated.Trim()
+                if ([string]::IsNullOrWhiteSpace($trimmed)) {
+                    Remove-Item -LiteralPath $path -Force
+                } else {
+                    Set-Content -LiteralPath $path -Value $trimmed -Encoding UTF8
+                }
             }
         }
     }
 
     'copilot' {
-        $path = Join-Path $userHome '.copilot\instructions\shitpm-global.instructions.md'
+        $dir = Join-Path $userHome '.copilot\instructions'
+        $path = Join-Path $dir 'shitpm-global.instructions.md'
         if (Test-Path -LiteralPath $path) {
             Remove-Item -LiteralPath $path -Force
         }
+        Remove-EmptyDirectory -Path $dir
     }
 
     'trae' {
-        $path = Join-Path $userHome '.trae\rules\shitpm-global.md'
+        $dir = Join-Path $userHome '.trae\rules'
+        $path = Join-Path $dir 'shitpm-global.md'
         if (Test-Path -LiteralPath $path) {
             Remove-Item -LiteralPath $path -Force
         }
+        Remove-EmptyDirectory -Path $dir
     }
 
     'trae-cn' {
-        $path = Join-Path $userHome '.trae-cn\rules\shitpm-global.md'
+        $dir = Join-Path $userHome '.trae-cn\rules'
+        $path = Join-Path $dir 'shitpm-global.md'
         if (Test-Path -LiteralPath $path) {
             Remove-Item -LiteralPath $path -Force
         }
+        Remove-EmptyDirectory -Path $dir
     }
 }
 

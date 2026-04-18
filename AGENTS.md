@@ -7,6 +7,15 @@
 3. 按该 skill 的规则执行任务
 4. 完成后更新当前项目的 `docs/project-status.json`
 
+## ShitPM Bundle 路径规则
+
+ShitPM 的运行时资源按完整 bundle 暴露在宿主根目录下的 `shitpm/` 中。
+
+- 读取共享资源时，优先使用 `shitpm/templates/...`、`shitpm/contracts/...`、`shitpm/commands/...`
+- 不得假设 `contracts / templates / commands` 被拆到不同目录
+- 不得按当前项目工作区解析这些路径
+- 具体解析规则见 `contracts/host-contract.md`
+
 ## 短命令路由
 
 当用户输入以下命令时，直接路由到对应阶段：
