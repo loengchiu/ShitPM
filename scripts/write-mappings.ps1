@@ -51,7 +51,7 @@ foreach ($legacyShared in @('shitpm-commands', 'shitpm-templates', 'shitpm-contr
 
 Ensure-Junction -LinkPath $hostBundle -TargetPath $shitpmRoot -BackupRoot $backupRoot
 
-if ($HostKind -in @('trae', 'trae-cn')) {
+if ($HostKind -in @('codex', 'trae', 'trae-cn')) {
     if (-not (Test-Path -LiteralPath $legacyHostSkills)) {
         New-Item -ItemType Directory -Force -Path $legacyHostSkills | Out-Null
     }

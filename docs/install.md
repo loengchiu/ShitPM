@@ -13,6 +13,7 @@ powershell -File .\installers\install.ps1
 安装器会：
 
 - 连接宿主中的完整 `shitpm` bundle
+- 为需要短技能名入口的宿主补齐根目录 `skills` 映射（例如 `~/.codex/skills`、`~/.trae-cn/skills`）
 - 校验宿主 bundle 路径
 - 使宿主能够在已初始化项目中读取 `AGENTS.md`
 

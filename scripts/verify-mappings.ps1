@@ -33,7 +33,7 @@ if (-not (Test-Path -LiteralPath $skillsDir)) {
     }
 }
 
-if ($HostKind -in @('trae', 'trae-cn')) {
+if ($HostKind -in @('codex', 'trae', 'trae-cn')) {
     if (-not (Test-Path -LiteralPath $hostSkillsDir)) {
         $missing += 'host-skills'
     } else {
