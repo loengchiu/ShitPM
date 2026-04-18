@@ -71,11 +71,47 @@ applyTo: "**"
 
 内容同 VS Code Copilot 的规则内容。
 
+### Trae
+
+创建文件：`{USER_HOME}/.trae/rules/shitpm-global.md`
+如果 `.trae/rules` 目录不存在，先创建。
+
+内容：
+
+```md
+---
+alwaysApply: true
+---
+# ShitPM 全局规则
+
+如果当前项目根目录存在 docs/project-status.json，
+请读取 {SHITPM_PATH}/AGENTS.md 并严格遵循其中的所有规则。
+如果不存在 docs/project-status.json，忽略本规则，不执行任何 ShitPM 相关操作。
+```
+
+### Trae CN
+
+创建文件：`{USER_HOME}/.trae-cn/rules/shitpm-global.md`
+如果 `.trae-cn/rules` 目录不存在，先创建。
+
+内容：
+
+```md
+---
+alwaysApply: true
+---
+# ShitPM 全局规则
+
+如果当前项目根目录存在 docs/project-status.json，
+请读取 {SHITPM_PATH}/AGENTS.md 并严格遵循其中的所有规则。
+如果不存在 docs/project-status.json，忽略本规则，不执行任何 ShitPM 相关操作。
+```
+
 ## 3. 完成后告知用户
 
 ```text
 ShitPM 已安装完成。
 - 安装路径：{SHITPM_PATH}
-- 已配置全局规则的 IDE：VS Code Copilot、Cursor、Codex、Antigravity
+- 已配置全局规则的 IDE：VS Code Copilot、Cursor、Codex、Antigravity、Trae、Trae CN
 - 使用方式：打开任何项目，输入'初始化 ShitPM'即可开始使用。
 ```

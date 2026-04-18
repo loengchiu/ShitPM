@@ -1,5 +1,5 @@
 param(
-    [Parameter(Mandatory = $true)][ValidateSet('copilot', 'codex', 'cursor', 'windsurf', 'trae', 'antigravity')][string]$HostKind
+    [Parameter(Mandatory = $true)][ValidateSet('copilot', 'codex', 'cursor', 'windsurf', 'trae', 'trae-cn', 'antigravity')][string]$HostKind
 )
 
 $base = switch ($HostKind) {
@@ -12,6 +12,7 @@ $base = switch ($HostKind) {
     'cursor'      { Join-Path $env:USERPROFILE '.cursor' }
     'windsurf'    { Join-Path $env:USERPROFILE '.windsurf' }
     'trae'        { Join-Path $env:USERPROFILE '.trae' }
+    'trae-cn'     { Join-Path $env:USERPROFILE '.trae-cn' }
     'antigravity' { Join-Path $env:USERPROFILE '.gemini\antigravity' }
 }
 

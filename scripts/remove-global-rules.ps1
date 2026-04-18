@@ -1,5 +1,5 @@
 param(
-    [Parameter(Mandatory = $true)][ValidateSet('copilot', 'codex')][string]$HostKind
+    [Parameter(Mandatory = $true)][ValidateSet('copilot', 'codex', 'trae', 'trae-cn')][string]$HostKind
 )
 
 $ErrorActionPreference = 'Stop'
@@ -23,6 +23,20 @@ switch ($HostKind) {
 
     'copilot' {
         $path = Join-Path $userHome '.copilot\instructions\shitpm-global.instructions.md'
+        if (Test-Path -LiteralPath $path) {
+            Remove-Item -LiteralPath $path -Force
+        }
+    }
+
+    'trae' {
+        $path = Join-Path $userHome '.trae\rules\shitpm-global.md'
+        if (Test-Path -LiteralPath $path) {
+            Remove-Item -LiteralPath $path -Force
+        }
+    }
+
+    'trae-cn' {
+        $path = Join-Path $userHome '.trae-cn\rules\shitpm-global.md'
         if (Test-Path -LiteralPath $path) {
             Remove-Item -LiteralPath $path -Force
         }

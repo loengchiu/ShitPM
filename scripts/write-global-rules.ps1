@@ -1,5 +1,5 @@
 param(
-    [Parameter(Mandatory = $true)][ValidateSet('copilot', 'codex')][string]$HostKind
+    [Parameter(Mandatory = $true)][ValidateSet('copilot', 'codex', 'trae', 'trae-cn')][string]$HostKind
 )
 
 $ErrorActionPreference = 'Stop'
@@ -50,6 +50,48 @@ switch ($HostKind) {
         $content = @(
             '---'
             'applyTo: "**"'
+            '---'
+            '# ShitPM Global Rules'
+            ''
+            'If the current project root contains `docs/project-status.json`,'
+            "read ${shitpmRoot}\AGENTS.md and follow all rules in that file."
+            'If `docs/project-status.json` does not exist, ignore this rule and do not run any ShitPM workflow.'
+        ) -join "`r`n"
+
+        Set-Content -LiteralPath $path -Value $content -Encoding UTF8
+    }
+
+    'trae' {
+        $dir = Join-Path $userHome '.trae\rules'
+        $path = Join-Path $dir 'shitpm-global.md'
+        if (-not (Test-Path -LiteralPath $dir)) {
+            New-Item -ItemType Directory -Force -Path $dir | Out-Null
+        }
+
+        $content = @(
+            '---'
+            'alwaysApply: true'
+            '---'
+            '# ShitPM Global Rules'
+            ''
+            'If the current project root contains `docs/project-status.json`,'
+            "read ${shitpmRoot}\AGENTS.md and follow all rules in that file."
+            'If `docs/project-status.json` does not exist, ignore this rule and do not run any ShitPM workflow.'
+        ) -join "`r`n"
+
+        Set-Content -LiteralPath $path -Value $content -Encoding UTF8
+    }
+
+    'trae-cn' {
+        $dir = Join-Path $userHome '.trae-cn\rules'
+        $path = Join-Path $dir 'shitpm-global.md'
+        if (-not (Test-Path -LiteralPath $dir)) {
+            New-Item -ItemType Directory -Force -Path $dir | Out-Null
+        }
+
+        $content = @(
+            '---'
+            'alwaysApply: true'
             '---'
             '# ShitPM Global Rules'
             ''

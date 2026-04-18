@@ -15,7 +15,7 @@ if ($Hosts -and $Hosts.Count -gt 0) {
 }
 
 if ($targetHosts.Count -eq 0) {
-    Write-Warning '未检测到任何已知宿主目录（.copilot / .agents / .cursor / .windsurf / .trae）。'
+    Write-Warning '未检测到任何已知宿主目录（.copilot / .agents / .cursor / .windsurf / .trae / .trae-cn）。'
     Write-Warning '请先确认宿主 AI 工具已安装，或使用 -Hosts 参数手动指定。'
     exit 1
 }
@@ -34,7 +34,7 @@ foreach ($hostKind in $targetHosts) {
         & $individualInstaller
         $ok = ($LASTEXITCODE -eq 0)
     } else {
-        # 通用 junction 安装路径（cursor / windsurf / trae 等，目录存在即可）
+        # 通用 junction 安装路径（cursor / windsurf 等，目录存在即可）
         try {
             & (Join-Path $scriptsDir 'write-mappings.ps1') -HostKind $hostKind
             & (Join-Path $scriptsDir 'verify-mappings.ps1') -HostKind $hostKind

@@ -1,5 +1,5 @@
 param(
-    [Parameter(Mandatory = $true)][ValidateSet('copilot', 'codex')][string]$HostKind
+    [Parameter(Mandatory = $true)][ValidateSet('copilot', 'codex', 'trae', 'trae-cn')][string]$HostKind
 )
 
 $ErrorActionPreference = 'Stop'
@@ -29,6 +29,32 @@ switch ($HostKind) {
         $content = Get-Content -LiteralPath $path -Raw
         if ($content -notmatch 'ShitPM Global Rules' -or $content -notmatch [regex]::Escape("$shitpmRoot\AGENTS.md")) {
             Write-Error 'verify failed: copilot global instructions missing ShitPM rule'
+            exit 1
+        }
+    }
+
+    'trae' {
+        $path = Join-Path $userHome '.trae\rules\shitpm-global.md'
+        if (-not (Test-Path -LiteralPath $path)) {
+            Write-Error 'verify failed: trae global rules missing'
+            exit 1
+        }
+        $content = Get-Content -LiteralPath $path -Raw
+        if ($content -notmatch 'ShitPM Global Rules' -or $content -notmatch [regex]::Escape("$shitpmRoot\AGENTS.md")) {
+            Write-Error 'verify failed: trae global rules missing ShitPM rule'
+            exit 1
+        }
+    }
+
+    'trae-cn' {
+        $path = Join-Path $userHome '.trae-cn\rules\shitpm-global.md'
+        if (-not (Test-Path -LiteralPath $path)) {
+            Write-Error 'verify failed: trae-cn global rules missing'
+            exit 1
+        }
+        $content = Get-Content -LiteralPath $path -Raw
+        if ($content -notmatch 'ShitPM Global Rules' -or $content -notmatch [regex]::Escape("$shitpmRoot\AGENTS.md")) {
+            Write-Error 'verify failed: trae-cn global rules missing ShitPM rule'
             exit 1
         }
     }

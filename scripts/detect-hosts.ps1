@@ -8,6 +8,7 @@ $knownHosts = @(
     [pscustomobject]@{ Kind = 'cursor';  Base = (Join-Path $env:USERPROFILE '.cursor') },
     [pscustomobject]@{ Kind = 'windsurf'; Base = (Join-Path $env:USERPROFILE '.windsurf') },
     [pscustomobject]@{ Kind = 'trae';    Base = (Join-Path $env:USERPROFILE '.trae') },
+    [pscustomobject]@{ Kind = 'trae-cn'; Base = (Join-Path $env:USERPROFILE '.trae-cn') },
     [pscustomobject]@{ Kind = 'antigravity'; Base = (Join-Path $env:USERPROFILE '.gemini/antigravity') }
 )
 

@@ -1,0 +1,24 @@
+param()
+
+$ErrorActionPreference = 'Stop'
+
+$shitpmRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\\..')).Path
+$scriptsDir = Join-Path $shitpmRoot 'scripts'
+$resolved = & (Join-Path $scriptsDir 'resolve-paths.ps1') -HostKind 'trae-cn'
+$hostBase = $resolved.Base
+
+if (-not (Test-Path -LiteralPath $hostBase)) {
+    Write-Error 'Trae CN host root not found'
+    exit 1
+}
+
+try {
+    & (Join-Path $scriptsDir 'write-mappings.ps1') -HostKind 'trae-cn'
+    & (Join-Path $scriptsDir 'write-global-rules.ps1') -HostKind 'trae-cn'
+    & (Join-Path $scriptsDir 'verify-mappings.ps1') -HostKind 'trae-cn'
+    & (Join-Path $scriptsDir 'verify-global-rules.ps1') -HostKind 'trae-cn'
+    exit 0
+} catch {
+    Write-Error $_
+    exit 1
+}
