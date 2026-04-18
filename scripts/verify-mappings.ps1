@@ -11,6 +11,7 @@ $skillsDir = $resolved.Skills
 $commandsDir = $resolved.Commands
 $templatesDir = $resolved.Templates
 $contractsDir = $resolved.Contracts
+$hostSkillsDir = Join-Path $base 'skills'
 
 $requiredSkills = @('start', 'scope', 'sum', 'mind', 'feat', 'page', 'prd', 'rev', 'fix', 'mock', 'note')
 $requiredCommands = @('start.md', 'sum.md', 'mind.md', 'feat.md', 'page.md', 'prd.md', 'rev.md', 'fix.md', 'mock.md', 'note.md')
@@ -28,6 +29,18 @@ if (-not (Test-Path -LiteralPath $skillsDir)) {
     foreach ($skill in $requiredSkills) {
         if (-not (Test-Path -LiteralPath (Join-Path $skillsDir $skill))) {
             $missing += "skill:$skill"
+        }
+    }
+}
+
+if ($HostKind -in @('trae', 'trae-cn')) {
+    if (-not (Test-Path -LiteralPath $hostSkillsDir)) {
+        $missing += 'host-skills'
+    } else {
+        foreach ($skill in $requiredSkills) {
+            if (-not (Test-Path -LiteralPath (Join-Path $hostSkillsDir $skill))) {
+                $missing += "host-skill:$skill"
+            }
         }
     }
 }

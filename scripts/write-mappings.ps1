@@ -9,6 +9,7 @@ $resolved = & (Join-Path $PSScriptRoot 'resolve-paths.ps1') -HostKind $HostKind
 $hostBase = $resolved.Base
 $hostBundle = $resolved.Bundle
 $legacyHostSkills = Join-Path $hostBase 'skills'
+$hostBundleSkills = Join-Path $hostBundle 'skills'
 
 $shitpmRoot = Get-ShitPmRoot
 
@@ -49,4 +50,16 @@ foreach ($legacyShared in @('shitpm-commands', 'shitpm-templates', 'shitpm-contr
 }
 
 Ensure-Junction -LinkPath $hostBundle -TargetPath $shitpmRoot -BackupRoot $backupRoot
+
+if ($HostKind -in @('trae', 'trae-cn')) {
+    if (-not (Test-Path -LiteralPath $legacyHostSkills)) {
+        New-Item -ItemType Directory -Force -Path $legacyHostSkills | Out-Null
+    }
+
+    foreach ($skillName in (Get-ShitPmSkillNames -ShitPmRoot $shitpmRoot)) {
+        $mirrorTarget = Join-Path $hostBundleSkills $skillName
+        $mirrorLink = Join-Path $legacyHostSkills $skillName
+        Ensure-Junction -LinkPath $mirrorLink -TargetPath $mirrorTarget -BackupRoot $backupRoot
+    }
+}
 
