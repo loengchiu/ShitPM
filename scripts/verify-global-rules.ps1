@@ -5,6 +5,8 @@ param(
 $ErrorActionPreference = 'Stop'
 $shitpmRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $userHome = $env:USERPROFILE
+$resolved = & (Join-Path $PSScriptRoot 'resolve-paths.ps1') -HostKind $HostKind
+$bundlePath = [regex]::Escape(($resolved.Bundle -replace '\\','/'))
 
 switch ($HostKind) {
     'codex' {
@@ -40,7 +42,7 @@ switch ($HostKind) {
             exit 1
         }
         $content = Get-Content -LiteralPath $path -Raw
-        if ($content -notmatch 'ShitPM Global Rules' -or $content -notmatch [regex]::Escape("$shitpmRoot\AGENTS.md")) {
+        if ($content -notmatch 'ShitPM Global Rules' -or $content -notmatch [regex]::Escape("$shitpmRoot\AGENTS.md") -or $content -notmatch 'ShitPM bundle path:' -or $content -notmatch $bundlePath) {
             Write-Error 'verify failed: trae global rules missing ShitPM rule'
             exit 1
         }
@@ -53,7 +55,7 @@ switch ($HostKind) {
             exit 1
         }
         $content = Get-Content -LiteralPath $path -Raw
-        if ($content -notmatch 'ShitPM Global Rules' -or $content -notmatch [regex]::Escape("$shitpmRoot\AGENTS.md")) {
+        if ($content -notmatch 'ShitPM Global Rules' -or $content -notmatch [regex]::Escape("$shitpmRoot\AGENTS.md") -or $content -notmatch 'ShitPM bundle path:' -or $content -notmatch $bundlePath) {
             Write-Error 'verify failed: trae-cn global rules missing ShitPM rule'
             exit 1
         }

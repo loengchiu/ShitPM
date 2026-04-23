@@ -6,6 +6,8 @@ $ErrorActionPreference = 'Stop'
 
 $shitpmRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $userHome = $env:USERPROFILE
+$resolved = & (Join-Path $PSScriptRoot 'resolve-paths.ps1') -HostKind $HostKind
+$bundlePath = $resolved.Bundle -replace '\\','/'
 $startMarker = '<!-- SHITPM GLOBAL RULES START -->'
 $endMarker = '<!-- SHITPM GLOBAL RULES END -->'
 
@@ -74,6 +76,9 @@ switch ($HostKind) {
             '---'
             '# ShitPM Global Rules'
             ''
+            "ShitPM bundle path: $bundlePath"
+            'When a skill references `shitpm/...` paths, resolve them relative to the bundle path above.'
+            ''
             'If the current project root contains `docs/project-status.json`,'
             "read ${shitpmRoot}\AGENTS.md and follow all rules in that file."
             'If `docs/project-status.json` does not exist, ignore this rule and do not run any ShitPM workflow.'
@@ -94,6 +99,9 @@ switch ($HostKind) {
             'alwaysApply: true'
             '---'
             '# ShitPM Global Rules'
+            ''
+            "ShitPM bundle path: $bundlePath"
+            'When a skill references `shitpm/...` paths, resolve them relative to the bundle path above.'
             ''
             'If the current project root contains `docs/project-status.json`,'
             "read ${shitpmRoot}\AGENTS.md and follow all rules in that file."
